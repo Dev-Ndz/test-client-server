@@ -5,10 +5,16 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <main>
+        <h1>selected</h1>
         <ul id="tasks">
             <% if(tasks.length >0){ %>
                 <% tasks.forEach((task)=>{ %>
-                    <li class="task">
+                    <% if (task._id.toString() === selectedTask._id.toString()) { %>
+                        <li class="selected-task"><p>the chosen one :</p>
+                    <% }else{ %>
+                        <li class="task"></li>
+                    <%} %>
+                    
                         <%if(task.isDone){ %>
                             <a class = "check-btn" href="#" class="checked"><div class="img-container"><img src="assets/check-mark.png" alt=""></div></a>
                         <%}else{ %>
@@ -19,15 +25,11 @@
                         </a>
                     </li>
                    
-                <%}) %>
+                <%}); %>
             <%} %>
         </ul>
 
             <a class="add-btn" href="/add">+</a>
-
-
-        
     </main>
-
 </body>
 </html>

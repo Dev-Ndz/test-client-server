@@ -1,36 +1,113 @@
 const express = require('express');
-const Database = require('./database.js');
-
-
+const mongoose = require('mongoose');
+const Task = require('./models/tasks')
 
 const app = express();
+
 // connect to mongo db
-const dbURI = 'mongodb+srv://ndz:test1234@cluster0.6mhcgws.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const dbURI = 'mongodb+srv://ndz:test1234@cluster0.6mhcgws.mongodb.net/task-manager?retryWrites=true&w=majority&appName=Cluster0';
+mongoose.connect(dbURI)
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
 
 //register view engine
 app.set('view engine', 'ejs');
 
-app.listen(3000);
-
 // middleware & static files
 app.use(express.static('public'))
+app.use(express.urlencoded({extended:true}))
 
-app.use((req, res, next)=>{
-    console.log('in the next middleware');
-    next();
-})
+app.get('/new-task', (req, res) => {
+    const task = new Task({
+        content: 'newer task',
+        isDone : false
+    });
 
-app.get('/',async (req, res) => {
-    
-    const tasks = await Database.query(
-        `SELECT content FROM tasks`
-    );
-    console.log(tasks);
-    res.render('index', {tasks});
+    task.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
-app.get('/about',(req, res) => {
-    res.render('about')
+app.get('/all-tasks', (req,res) => {
+    Task.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+app.get('/single-task', (req, res) =>{
+    Task.findById('65def8cb345c955d55021a12')
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+app.get('/task',(req, res) => {
+    Task.find()
+        .then((result) =>{
+            res.render('index',{tasks : result});
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+app.get('/', (req,res) =>{
+    res.redirect('/task');
+});
+app.post('/task', (req, res) => {
+    const task = new Task({
+        content:req.body.content,
+        isDone: false
+    });
+
+    task.save()
+        .then((result) => {
+            res.redirect('/task');
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+app.get('/task/:id', async(req,res) => {
+    const listOfTask = await Task.find();
+    const id = req.params.id;
+    Task.findById(id)
+        .then((result) => {
+            console.log(listOfTask);
+            console.log(result);
+            res.render('selected',{tasks:listOfTask, selectedTask:result});
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+})
+app.get('/s',(req, res) => {
+    Task.find()
+    .then((result) =>{
+        res.render('selected',{tasks : result});
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+});
+
+app.get('/add',(req, res) => {
+    Task.find()
+    .then((result) =>{
+        res.render('add',{tasks : result});
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 });
 
 app.use((req, res)=>{

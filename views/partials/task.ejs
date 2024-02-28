@@ -1,0 +1,8 @@
+<%if(task.isDone){ %>
+    <a class = "check-btn" href="#" class="checked"><div class="img-container"><img src="/assets/check-mark.png" alt=""></div></a>
+<%}else{ %>
+    <a class = "check-btn" href="#" class="unchecked"><div class="checkbox"></div></a>
+<% } %>
+<a class = "task-btn" href="/task/<%= task._id %>">
+    <%= task.content %>
+</a>

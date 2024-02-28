@@ -5,24 +5,27 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <main>
-        <h1>selected</h1>
         <ul id="tasks">
             <% if(tasks.length >0){ %>
                 <% tasks.forEach((task)=>{ %>
                     <% if (task._id.toString() === selectedTask._id.toString()) { %>
-                        <li class="selected-task"><p>the chosen one :</p>
+                        <li class="selected-task"><div class = "task-container">
                     <% }else{ %>
-                        <li class="task"></li>
-                    <%} %>
-                    
+                        <li class="task"><div class = "task-container">
+                    <%} %>                    
                         <%if(task.isDone){ %>
-                            <a class = "check-btn" href="#" class="checked"><div class="img-container"><img src="assets/check-mark.png" alt=""></div></a>
+                            <a class = "check-btn" href="#" class="checked"><div class="img-container"><img src="/assets/check-mark.png" alt=""></div></a>
                         <%}else{ %>
                             <a class = "check-btn" href="#" class="unchecked"><div class="checkbox"></div></a>
                         <% } %>
                         <a class = "task-btn" href="/task/<%= task._id %>">
                             <%= task.content %>
                         </a>
+                        </div>
+                        <div class="modify-btn">
+                            <a href="#" class="edit-btn">edit</a><a href="#" class="delete-btn">delete</a>
+
+                        </div>
                     </li>
                    
                 <%}); %>

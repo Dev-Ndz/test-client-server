@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>My first page</title>
+</head>
+<body>
+
+
+    
+    <h1>Task Manager</h1>
+    <ul id="tasklist">
+        <% if(tasks.length >0){ %>
+            <% tasks.forEach((task)=>{ %>
+            <li class="task"><%= task.content %></li>
+            <%}) %>
+        <%} %>
+
+    </ul>
+    
+    <form>
+
+        <label for="task">New task :</label>
+        <input type="text" id = "task" name = "task">
+        <input type='submit' value = "create new task">
+
+    </form>
+    
+    
+    <a href="about">abouté</a>
+</body>
+</html>

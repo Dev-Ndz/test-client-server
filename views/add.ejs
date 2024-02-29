@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/head.ejs') %>
-
 <body>
     <%- include('./partials/header.ejs') %>
     <main>
         <h1>Add task</h1>
-        <ul id="tasks">
-            <% if(tasks.length >0){ %>
-                <% tasks.forEach((task)=>{ %>
-                    <!-- <a href="/<%= task._id%>"> -->
-                        <li class="task"><%= task.content %></li>
-                    <!-- </a> -->
-                <%}) %>
-            <%} %>
-        </ul>
-        <div class="add-button">
+        <%- include('./partials/tasklist.ejs')%>
 
-        </div>
     </main> 
     <form action = '/task' method='POST'>
         <label for="content">New task :</label>

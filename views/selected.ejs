@@ -7,32 +7,32 @@
     <main>
         <ul id="tasks">
             <% if(tasks.length >0){ %>
-                <% tasks.forEach((task)=>{ %>
-                    <% if (task._id.toString() === selectedTask._id.toString()) { %>
-                        <li class="selected-task"><div class = "task-container">
-                    <% }else{ %>
-                        <li class="task"><div class = "task-container">
-                    <%} %>                    
-                        <%if(task.isDone){ %>
-                            <a class = "check-btn" href="#" class="checked"><div class="img-container"><img src="/assets/check-mark.png" alt=""></div></a>
-                        <%}else{ %>
-                            <a class = "check-btn" href="#" class="unchecked"><div class="checkbox"></div></a>
-                        <% } %>
-                        <a class = "task-btn" href="/task/<%= task._id %>">
-                            <%= task.content %>
-                        </a>
-                        </div>
-                        <div class="modify-btn">
-                            <a href="#" class="edit-btn">edit</a><a href="#" class="delete-btn">delete</a>
+                <% tasks.forEach((task,i)=>{ %>
+                        <li class= "<%= (task._id.toString() === selectedTask._id.toString())? 'selected-task':'task'%>">
+                            
+                            <div class = "task-container">
+                
+                                <a class = "check-btn <%= (task.isDone)?'checked': 'unchecked'%>" data-doc = "<%= task._id %>">
+                                    <div class="checkbox"></div>
+                                    <div class="img-container"><img src="/assets/check-mark.png" alt="marked as done"></div>
+                                </a>
 
+                                <a class = "task-btn" href="/task/<%= task._id %>">
+                                    <%= task.content %>
+                                </a>
+                        </div>
+
+                        <div class="modify-btn">
+                            <a href = "#" class = "edit-btn" >edit</a>
+                            <a class = "delete-btn" data-doc = "<%= selectedTask._id %>">delete</a>
                         </div>
                     </li>
                    
                 <%}); %>
             <%} %>
         </ul>
-
             <a class="add-btn" href="/add">+</a>
     </main>
+
 </body>
 </html>

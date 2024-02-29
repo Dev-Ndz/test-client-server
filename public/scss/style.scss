@@ -39,6 +39,19 @@ ul{
         background-color: #FFFFFF;
         box-shadow: 0 4px 4px #0000004b;
         margin: 20px;
+
+        .checked{
+            .checkbox{
+                display: none;
+            }
+        }
+        .unchecked{
+            .img-container{
+                display: none;
+            }
+        }
+
+
     
         .task-btn{
             height: 100%;
@@ -57,6 +70,7 @@ ul{
         .checkbox{
             border: solid 1px #0000002a;
         }
+        
 
     }
     .modify-btn{
@@ -73,7 +87,17 @@ ul{
     .modify-btn{
         display:flex;
         justify-content: space-around;
+
+        .delete-btn{
+            padding: 5px;
+            background-color: rgb(119, 61, 61);
+        }
+        .delete-btn:hover{
+            cursor:pointer;
+            box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+        }
     }
+
     
 }
 
